@@ -1,16 +1,12 @@
 import React from 'react';
 
-const EleitoresForm = () => {
+const PartidoForm = () => {
   return (
     <div className="container my-5">
     <form>
     <div className="form-group">
         <label>Nome</label>
         <input type="text" className="form-control" id="nome" />
-    </div>
-    <div className="form-group">
-        <label>Número de BI</label>
-        <input type="text" className="form-control" id="bi" />
     </div>
     <div className="form-group">
         <label>Foto</label>
@@ -22,4 +18,4 @@ const EleitoresForm = () => {
     );
 };
 
-export default EleitoresForm;
+export default PartidoForm;
