@@ -8,6 +8,7 @@ const schema = mongoose.Schema({
     bi:{
       type: String,
       required: true,
+      unique: true
     },
 
     foto:{

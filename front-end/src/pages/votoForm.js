@@ -10,6 +10,9 @@ const VotoForm = () => {
   const [nomeEleitor, setNomeEleitor] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
+  const [eleitorId, setEleitorId] = useState('');
+  const [partidoId, setPartidoId] = useState('');
+  const [candidatoId, setCandidatoId] = useState('');
 
   useEffect(() => {
     // Fetch parties from the backend
@@ -23,23 +26,20 @@ const VotoForm = () => {
       .then(data => setCandidates(data));
   }, []);
 
-  const handlePartySelection = (partyName) => {
+  const handlePartySelection = (partyName, partID) => {
     setSelectedParty(partyName);
+    setPartidoId(partID);
   };
 
-  const handleCandidateSelection = (candidateName) => {
+  const handleCandidateSelection = (candidateName, candidateID) => {
     setSelectedCandidate(candidateName);
+    setCandidatoId(candidateID);
   };
 
   const handleVotar = (e) => {
     e.preventDefault();
     console.log(`Partido escolhido: ${selectedParty}`);
     console.log(`Candidato escolhido: ${selectedCandidate}`);
-    
-    // Register the vote
-    const eleitorId = bi; // Use the entered BI as the eleitorId
-    const partidoId = selectedParty; // Use the selected party ID
-    const candidatoId = selectedCandidate; // Use the selected candidate ID
 
     fetch('http://localhost:5000/api/votar', {
       method: 'POST',
@@ -69,10 +69,12 @@ const VotoForm = () => {
     fetch(`http://localhost:5000/api/eleitores/${enteredBi}`)
       .then(response => response.json())
       .then(data => {
-        if (data.nome) {
+        if (data._id) {
           setNomeEleitor(data.nome);
+          setEleitorId(data._id); // Set the eleitorId to the retrieved ID
         } else {
           setNomeEleitor('');
+          setEleitorId(''); // Reset the eleitorId if no ID is found
         }
       })
       .catch(error => {
@@ -83,7 +85,7 @@ const VotoForm = () => {
   return (
     <div className="container my-5">
       <div className="card" style={{ width: '200px', margin: '0 auto' }}>
-        <Gravatar email="email@example.com" name={nomeEleitor} size={200}  />
+        <Gravatar email="email@example.com" name={nomeEleitor} size={200} />
         <div className="container text-center">
           <h6>
             <b>{nomeEleitor}</b>
@@ -114,7 +116,7 @@ const VotoForm = () => {
                       <button
                         type="button"
                         className="btn btn-primary"
-                        onClick={() => handlePartySelection(party.nome)}
+                        onClick={() => handlePartySelection(party.nome, party._id)}
                       >
                         Votar
                       </button>
@@ -138,7 +140,7 @@ const VotoForm = () => {
                       <button
                         type="button"
                         className="btn btn-primary"
-                        onClick={() => handleCandidateSelection(candidate.nome)}
+                        onClick={() => handleCandidateSelection(candidate.nome, candidate._id)}
                       >
                         Votar
                       </button>
