@@ -5,7 +5,7 @@ const schema = mongoose.Schema({
       type: String,
       required: true,
     },
-    imagem:{
+    foto:{
       type: String,
       required: true,
     }

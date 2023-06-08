@@ -16,7 +16,7 @@ router.get('/votos', async (req, res) => {
 
 // Rota para registrar um voto em um partido e candidato
 router.post('/votar', async (req, res) => {
-  const {eleitorId, partidoId, candidatoId } = req.body;
+  const { eleitorId, partidoId, candidatoId } = req.body;
 
   try {
     // Verificar se o eleitor já votou
@@ -39,6 +39,8 @@ router.post('/votar', async (req, res) => {
     res.status(500).send({ error: 'Ocorreu um erro ao registrar o voto.' });
   }
 });
+
+
 
 // Rota para obter o relatório de votos
 router.get('/relatorio-votos', async (req, res) => {

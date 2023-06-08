@@ -10,7 +10,7 @@ router.get('/partidos', async (req, res) => {
 router.post('/partidos', async (req, res) => {
   const partido = new Partido({
     nome: req.body.nome,
-    imagem: req.body.imagem
+    foto: req.body.foto
   });
   await partido.save();
   res.status(201).send(partido);
@@ -34,8 +34,8 @@ router.put('/partidos/:id', async (req, res) => {
       partido.nome = req.body.nome;
     }
     
-    if (req.body.imagem) {
-      partido.imagem = req.body.imagem;
+    if (req.body.foto) {
+      partido.foto = req.body.foto;
     }
 
     await partido.save();
