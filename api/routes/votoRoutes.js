@@ -97,8 +97,8 @@ router.get('/relatorio-votos', async (req, res) => {
 
     // Calcular as porcentagens de votos
     const totalVotos = votos.length;
-    const percentualPartidoVencedor = (votosPartidoVencedor / totalVotos) * 100;
-    const percentualCandidatoVencedor = (votosCandidatoVencedor / totalVotos) * 100;
+    const percentualPartidoVencedor = ((votosPartidoVencedor / totalVotos) * 100).toFixed(2);
+    const percentualCandidatoVencedor = ((votosCandidatoVencedor / totalVotos) * 100).toFixed(2);
 
     // Obter o nome do partido vencedor
     const partidoVencedorObj = await Partido.findById(partidoVencedor);
@@ -115,7 +115,7 @@ router.get('/relatorio-votos', async (req, res) => {
         const partidoObj = await Partido.findById(partidoId);
         const nomePartido = partidoObj.nome;
         const totalVotosPartido = votosPorPartido[partidoId];
-        const percentualVotosPartido = (totalVotosPartido / totalVotos) * 100;
+        const percentualVotosPartido = ((totalVotosPartido / totalVotos) * 100).toFixed(2);
 
         outrosPartidos.push({
           nome: nomePartido,
@@ -132,7 +132,7 @@ router.get('/relatorio-votos', async (req, res) => {
         const candidatoObj = await Candidato.findById(candidatoId);
         const nomeCandidato = candidatoObj.nome;
         const totalVotosCandidato = votosPorCandidato[candidatoId];
-        const percentualVotosCandidato = (totalVotosCandidato / totalVotos) * 100;
+        const percentualVotosCandidato = ((totalVotosCandidato / totalVotos) * 100).toFixed(2);
 
         outrosCandidatos.push({
           nome: nomeCandidato,
