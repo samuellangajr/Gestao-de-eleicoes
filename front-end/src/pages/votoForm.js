@@ -11,6 +11,7 @@ const VotoForm = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [eleitorId, setEleitorId] = useState('');
+  const [fotoEleitor, setFotoEleitor] = useState('');
   const [partidoId, setPartidoId] = useState('');
   const [candidatoId, setCandidatoId] = useState('');
 
@@ -71,6 +72,7 @@ const VotoForm = () => {
       .then(data => {
         if (data._id) {
           setNomeEleitor(data.nome);
+          setFotoEleitor(data.foto);
           setEleitorId(data._id); // Set the eleitorId to the retrieved ID
         } else {
           setNomeEleitor('');
@@ -85,10 +87,10 @@ const VotoForm = () => {
   return (
     <div className="container my-5">
       <div className="card" style={{ width: '200px', margin: '0 auto' }}>
-        <Gravatar email="email@example.com" name={nomeEleitor} size={200} />
-        <div className="container text-center">
+      <Gravatar email={fotoEleitor || 'default@example.com'} name={nomeEleitor} size={200} />
+        <div className="container text-center p-2">
           <h6>
-            <b>{nomeEleitor}</b>
+            <b>{nomeEleitor || 'Nome do eleitor'}</b>
           </h6>
         </div>
       </div>
