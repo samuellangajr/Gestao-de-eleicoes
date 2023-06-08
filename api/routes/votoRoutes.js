@@ -2,6 +2,7 @@ const express = require('express');
 const Voto = require('../models/Voto');
 const Partido = require('../models/Partido');
 const Candidato = require('../models/Candidato');
+const Eleitor = require('../models/Eleitor');
 const router = express.Router();
 
 // Rota para obter todos os votos
@@ -19,13 +20,20 @@ router.post('/votar', async (req, res) => {
   const { eleitorId, partidoId, candidatoId } = req.body;
 
   try {
+
+    //Verificar se o eleitor existe
+    const eleitor = await Eleitor.findOne({ _id: req.body.eleitorId });
+    if(!eleitor){
+      res.status(404).res.send({ error: "O Eleitor não existe!" });
+      return;
+    }
     // Verificar se o eleitor já votou
     const votoExistente = await Voto.findOne({ eleitorId });
     if (votoExistente) {
       res.status(400).send({ error: 'Você já votou anteriormente.' });
       return;
     }
-
+    
     // Registrar o voto na base de dados
     const voto = new Voto({
       eleitorId,
@@ -39,7 +47,6 @@ router.post('/votar', async (req, res) => {
     res.status(500).send({ error: 'Ocorreu um erro ao registrar o voto.' });
   }
 });
-
 
 
 // Rota para obter o relatório de votos
