@@ -28,14 +28,25 @@ const VotoForm = () => {
   }, []);
 
   const handlePartySelection = (partyName, partID) => {
-    setSelectedParty(partyName);
-    setPartidoId(partID);
+    if (selectedParty === partyName) {
+      setSelectedParty('');
+      setPartidoId('');
+    } else {
+      setSelectedParty(partyName);
+      setPartidoId(partID);
+    }
   };
-
+  
   const handleCandidateSelection = (candidateName, candidateID) => {
-    setSelectedCandidate(candidateName);
-    setCandidatoId(candidateID);
+    if (selectedCandidate === candidateName) {
+      setSelectedCandidate('');
+      setCandidatoId('');
+    } else {
+      setSelectedCandidate(candidateName);
+      setCandidatoId(candidateID);
+    }
   };
+  
 
   const handleVotar = (e) => {
     e.preventDefault();
@@ -87,7 +98,7 @@ const VotoForm = () => {
   return (
     <div className="container my-5">
       <div className="card" style={{ width: '200px', margin: '0 auto' }}>
-      <Gravatar email={fotoEleitor || 'default@example.com'} name={nomeEleitor} size={200} />
+        <Gravatar email={fotoEleitor || 'default@example.com'} name={nomeEleitor} size={200} />
         <div className="container text-center p-2">
           <h6>
             <b>{nomeEleitor || 'Nome do eleitor'}</b>
@@ -95,7 +106,7 @@ const VotoForm = () => {
         </div>
       </div>
       <form>
-        <div className="form-group">
+        <div className="form-group my-3">
           <label><b>Número de BI</b></label>
           <input
             type="text"
@@ -107,21 +118,14 @@ const VotoForm = () => {
         </div>
         <div className="form-group">
           <label><b>Partidos</b></label>
-          <div className="container my-5">
+          <div className="container my-3">
             <div className="row">
               {parties.map((party, index) => (
                 <div className="col-md-3 my-2" key={index}>
-                  <div className="card custom-card">
+                  <div className={`card custom-card  ${selectedParty === party.nome ? 'selected' : ''}`} onClick={() => handlePartySelection(party.nome, party._id)}>
                     <Gravatar email={party.foto} size={200} />
                     <div className="card-body">
                       <h5 className="card-title">{party.nome}</h5>
-                      <button
-                        type="button"
-                        className="btn btn-primary"
-                        onClick={() => handlePartySelection(party.nome, party._id)}
-                      >
-                        Votar
-                      </button>
                     </div>
                   </div>
                 </div>
@@ -131,21 +135,14 @@ const VotoForm = () => {
         </div>
         <div className="form-group">
           <label><b>Candidatos</b></label>
-          <div className="container my-5">
+          <div className="container my-3">
             <div className="row">
               {candidates.map((candidate, index) => (
                 <div className="col-md-3 my-2" key={index}>
-                  <div className="card custom-card">
+                  <div className={`card custom-card ${selectedCandidate === candidate.nome ? 'selected' : ''}`} onClick={() => handleCandidateSelection(candidate.nome, candidate._id)}>
                     <Gravatar email={candidate.foto} size={200} />
                     <div className="card-body">
                       <h5 className="card-title">{candidate.nome}</h5>
-                      <button
-                        type="button"
-                        className="btn btn-primary"
-                        onClick={() => handleCandidateSelection(candidate.nome, candidate._id)}
-                      >
-                        Votar
-                      </button>
                     </div>
                   </div>
                 </div>
