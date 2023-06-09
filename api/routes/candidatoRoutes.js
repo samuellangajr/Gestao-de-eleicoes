@@ -15,8 +15,13 @@ router.post('/candidatos', async (req, res) => {
     partido: req.body.partido,
     foto: req.body.foto
   });
-  await candidato.save();
-  res.send(candidato);
+ 
+  try {
+    await candidato.save();
+    res.status(200).send(candidato);
+  } catch (error) {
+  res.status(500).send({ error: 'Erro ao criar candidato' });
+  }
 });
 
 //obter um candidato

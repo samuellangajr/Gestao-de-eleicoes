@@ -18,8 +18,8 @@ const RelatorioModal = () => {
     fetchRelatorio();
   }, []);
 
-  if (!relatorio) {
-    return <div>Loading...</div>;
+  if (!relatorio || (relatorio && relatorio.totalVotos === 0)) {
+    return <div>Não há votos registrados.</div>;
   }
 
 return (
@@ -36,11 +36,11 @@ return (
       </thead>
       <tbody>
         <tr className="table-success">
-          <th scope="row">{relatorio.partidoVencedor.nome}</th>
-          <td>{relatorio.partidoVencedor.votos}</td>
-          <td>{relatorio.partidoVencedor.percentual}%</td>
+          <th scope="row">{relatorio.partidoVencedor?.nome}</th>
+          <td>{relatorio.partidoVencedor?.votos}</td>
+          <td>{relatorio.partidoVencedor?.percentual}%</td>
         </tr>
-        {relatorio.outrosPartidos.map((partido, index) => (
+        {relatorio.outrosPartidos?.map((partido, index) => (
           <tr key={partido.nome} className={index === 0 ? 'table-warning' : 'table-danger'}>
             <th scope="row">{partido.nome}</th>
             <td>{partido.votos}</td>
@@ -61,11 +61,11 @@ return (
       </thead>
       <tbody>
         <tr className="table-success">
-          <th scope="row">{relatorio.candidatoVencedor.nome}</th>
-          <td>{relatorio.candidatoVencedor.votos}</td>
-          <td>{relatorio.candidatoVencedor.percentual}%</td>
+          <th scope="row">{relatorio.candidatoVencedor?.nome}</th>
+          <td>{relatorio.candidatoVencedor?.votos}</td>
+          <td>{relatorio.candidatoVencedor?.percentual}%</td>
         </tr>
-        {relatorio.outrosCandidatos.map((candidato, index) => (
+        {relatorio.outrosCandidatos?.map((candidato, index) => (
           <tr key={candidato.nome} className={index === 0 ? 'table-warning' : 'table-danger'}>
             <th scope="row">{candidato.nome}</th>
             <td>{candidato.votos}</td>

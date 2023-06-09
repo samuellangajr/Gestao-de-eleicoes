@@ -14,8 +14,13 @@ router.post('/partidos', async (req, res) => {
     nome: req.body.nome,
     foto: req.body.foto
   });
-  await partido.save();
-  res.status(201).send(partido);
+  
+  try {
+      await partido.save();
+      res.status(200).send(partido);
+  } catch (error) {
+    res.status(500).send({ error: 'Erro ao criar partido' });
+  }
 });
 
 //Obter um partido

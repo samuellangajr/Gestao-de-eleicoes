@@ -35,7 +35,6 @@ router.post('/votar', async (req, res) => {
   try { 
     // Registrar o voto na base de dados
     await voto.save();
-
     res.status(200).send({ message: 'Voto registrado com sucesso.' });
   } catch (error) {
     res.status(500).send({ error: 'Ocorreu um erro ao registrar o voto.' });

@@ -13,12 +13,6 @@ router.get('/eleitores', async (req, res) => {
 router.post('/eleitores', async (req, res) => {
   const { nome, bi, foto } = req.body;
 
-  // Verificar se o número de BI já existe no banco de dados
-  const eleitorExistente = await Eleitor.findOne({ bi });
-  if (eleitorExistente) {
-    return res.status(400).send({ error: 'Número de BI já cadastrado' });
-  }
-
   const eleitor = new Eleitor({
     nome,
     bi,
@@ -27,7 +21,7 @@ router.post('/eleitores', async (req, res) => {
 
   try {
     await eleitor.save();
-    res.send(eleitor);
+    res.status(200).send(eleitor);
   } catch (error) {
     res.status(500).send({ error: 'Erro ao criar eleitor' });
   }

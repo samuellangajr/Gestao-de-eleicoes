@@ -4,6 +4,7 @@ const schema = mongoose.Schema({
     eleitorId:{
       type: String,
       required: true,
+      unique: true
     },
     partidoId:{
       type: String,
