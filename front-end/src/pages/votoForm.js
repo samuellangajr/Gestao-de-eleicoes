@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Gravatar from 'react-gravatar';
 
 const VotoForm = () => {
+  
+  //Estados
   const [parties, setParties] = useState([]);
   const [candidates, setCandidates] = useState([]);
   const [selectedParty, setSelectedParty] = useState('');
@@ -16,17 +18,19 @@ const VotoForm = () => {
   const [candidatoId, setCandidatoId] = useState('');
 
   useEffect(() => {
-    // Fetch parties from the backend
+    // Fetch dos partidos
     fetch('http://localhost:5000/api/partidos/')
       .then(response => response.json())
       .then(data => setParties(data));
 
-    // Fetch candidates from the backend
+    // Fetch dos candidatos
     fetch('http://localhost:5000/api/candidatos/')
       .then(response => response.json())
       .then(data => setCandidates(data));
   }, []);
 
+
+  //Verificar o partido selecionado
   const handlePartySelection = (partyName, partID) => {
     if (selectedParty === partyName) {
       setSelectedParty('');
@@ -37,6 +41,8 @@ const VotoForm = () => {
     }
   };
   
+
+  //verificar o candidato selecionado
   const handleCandidateSelection = (candidateName, candidateID) => {
     if (selectedCandidate === candidateName) {
       setSelectedCandidate('');
@@ -48,11 +54,13 @@ const VotoForm = () => {
   };
   
 
+  //Efectuar votação
   const handleVotar = (e) => {
     e.preventDefault();
     console.log(`Partido escolhido: ${selectedParty}`);
     console.log(`Candidato escolhido: ${selectedCandidate}`);
-
+  
+    //fetch para votar
     fetch('http://localhost:5000/api/votar', {
       method: 'POST',
       headers: {
@@ -62,19 +70,23 @@ const VotoForm = () => {
     })
       .then(response => response.json())
       .then(data => {
-        if (data.message) {
-          setModalMessage('Voto registrado com sucesso.');
+        if (data.error) {
+          setModalMessage(`${data.error}`);
         } else {
-          setModalMessage('Erro ao registrar o voto.');
+          setModalMessage('Voto registrado com sucesso.');
         }
         setShowModal(true);
       })
       .catch(error => {
         console.error('Erro ao registrar o voto:', error);
+        setModalMessage('Erro ao registrar o voto.');
+        setShowModal(true);
       });
   };
+  
 
-  const handleNomeEleitorChange = (e) => {
+//Obter dados do eleitor com base no bi escrito
+  const handleDadosEleitorChange = (e) => {
     const enteredBi = e.target.value;
     setBi(enteredBi);
 
@@ -84,10 +96,10 @@ const VotoForm = () => {
         if (data._id) {
           setNomeEleitor(data.nome);
           setFotoEleitor(data.foto);
-          setEleitorId(data._id); // Set the eleitorId to the retrieved ID
+          setEleitorId(data._id);
         } else {
           setNomeEleitor('');
-          setEleitorId(''); // Reset the eleitorId if no ID is found
+          setEleitorId(''); 
         }
       })
       .catch(error => {
@@ -113,7 +125,7 @@ const VotoForm = () => {
             className="form-control"
             id="bi"
             value={bi}
-            onChange={handleNomeEleitorChange}
+            onChange={handleDadosEleitorChange}
           />
         </div>
         <div className="form-group">

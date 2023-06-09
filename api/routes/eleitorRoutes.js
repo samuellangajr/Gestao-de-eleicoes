@@ -2,11 +2,14 @@ const express = require('express');
 const Eleitor = require('../models/Eleitor');
 const router = express.Router();
 
+//Obter todos elitores
 router.get('/eleitores', async (req, res) => {
   const eleitores = await Eleitor.find();
   res.send(eleitores);
 });
 
+
+//Inserir eleitores
 router.post('/eleitores', async (req, res) => {
   const { nome, bi, foto } = req.body;
 
@@ -30,6 +33,7 @@ router.post('/eleitores', async (req, res) => {
   }
 });
 
+//Obter um eleitor
 router.get('/eleitores/:id', async (req, res) => {
   try {
     const eleitor = await Eleitor.findOne({bi: req.params.id });
@@ -40,6 +44,7 @@ router.get('/eleitores/:id', async (req, res) => {
   }
 });
 
+//actualizar os dados de um eleitor
 router.put('/eleitores/:id', async (req, res) => {
   try {
     const eleitor = await Eleitor.findOne({ _id: req.params.id });
@@ -64,6 +69,8 @@ router.put('/eleitores/:id', async (req, res) => {
   }
 });
 
+
+//Eliminar um eleitor
 router.delete('/eleitores/:id', async (req, res) => {
   try {
     await Eleitor.deleteOne({ _id: req.params.id });

@@ -2,11 +2,13 @@ const express = require('express');
 const Candidato = require('../models/Candidato');
 const router = express.Router();
 
+//Obter todos candidatos
 router.get('/candidatos', async (req, res) => {
   const candidatos = await Candidato.find();
   res.send(candidatos);
 });
 
+//Inserir canditados
 router.post('/candidatos', async (req, res) => {
   const candidato = new Candidato({
     nome: req.body.nome,
@@ -17,6 +19,7 @@ router.post('/candidatos', async (req, res) => {
   res.send(candidato);
 });
 
+//obter um candidato
 router.get('/candidatos/:id', async (req, res) => {
   try {
     const candidato = await Candidato.findOne({ _id: req.params.id });
@@ -27,6 +30,7 @@ router.get('/candidatos/:id', async (req, res) => {
   }
 });
 
+//Mudar dados do candidato
 router.put('/candidatos/:id', async (req, res) => {
   try {
     const candidato = await Candidato.findOne({ _id: req.params.id });
@@ -51,6 +55,7 @@ router.put('/candidatos/:id', async (req, res) => {
   }
 });
 
+//Eliminar um candidato
 router.delete('/candidatos/:id', async (req, res) => {
   try {
     await Candidato.deleteOne({ _id: req.params.id });

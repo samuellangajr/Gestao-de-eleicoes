@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
 const RelatorioModal = () => {
+  //Estados
   const [relatorio, setRelatorio] = useState(null);
 
   useEffect(() => {
     const fetchRelatorio = async () => {
       try {
+        //Fetch para obter o relatorio de votos
         const response = await fetch('http://localhost:5000/api/relatorio-votos');
         const data = await response.json();
         setRelatorio(data);
@@ -13,7 +15,6 @@ const RelatorioModal = () => {
         console.error('Error fetching relatorio:', error);
       }
     };
-
     fetchRelatorio();
   }, []);
 
@@ -21,10 +22,10 @@ const RelatorioModal = () => {
     return <div>Loading...</div>;
   }
 
-// ...
-
 return (
   <div className="container my-5">
+
+    {/*Tabela de partidos*/}
     <table className="table">
       <thead className="thead-dark">
         <tr>
@@ -39,7 +40,6 @@ return (
           <td>{relatorio.partidoVencedor.votos}</td>
           <td>{relatorio.partidoVencedor.percentual}%</td>
         </tr>
-        {/* Render other partido rows */}
         {relatorio.outrosPartidos.map((partido, index) => (
           <tr key={partido.nome} className={index === 0 ? 'table-warning' : 'table-danger'}>
             <th scope="row">{partido.nome}</th>
@@ -50,6 +50,7 @@ return (
       </tbody>
     </table>
 
+    {/*Tabela de candidatos*/}
     <table className="table mt-4">
       <thead className="thead-dark">
         <tr>
@@ -64,7 +65,6 @@ return (
           <td>{relatorio.candidatoVencedor.votos}</td>
           <td>{relatorio.candidatoVencedor.percentual}%</td>
         </tr>
-        {/* Render other candidato rows */}
         {relatorio.outrosCandidatos.map((candidato, index) => (
           <tr key={candidato.nome} className={index === 0 ? 'table-warning' : 'table-danger'}>
             <th scope="row">{candidato.nome}</th>

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 
 const PartidoForm = () => {
+  //Estados
   const [nome, setNome] = useState('');
   const [foto, setFoto] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
 
+  //Efectuar Registro
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -15,6 +17,7 @@ const PartidoForm = () => {
     };
 
     try {
+      //Fetch para inserir partido
       const response = await fetch('http://localhost:5000/api/partidos/', {
         method: 'POST',
         headers: {

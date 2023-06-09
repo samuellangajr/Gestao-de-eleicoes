@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 
 const EleitorForm = () => {
+  //Estados
   const [nome, setNome] = useState('');
   const [numeroBI, setNumeroBI] = useState('');
   const [foto, setFoto] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
 
+  //Efectuar registro
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -17,6 +19,7 @@ const EleitorForm = () => {
     };
 
     try {
+      //Fecth inserir eleitores
       const response = await fetch('http://localhost:5000/api/eleitores/', {
         method: 'POST',
         headers: {

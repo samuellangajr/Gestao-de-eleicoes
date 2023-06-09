@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
 const CandidatoForm = () => {
+
+  //Estadis
   const [nome, setNome] = useState('');
   const [partido, setPartido] = useState('');
   const [foto, setFoto] = useState('');
@@ -16,6 +18,8 @@ const CandidatoForm = () => {
       .catch((error) => console.error('Erro de conexão:', error));
   }, []);
 
+
+  //Efectuar registro
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -24,8 +28,9 @@ const CandidatoForm = () => {
       partido: partido,
       foto: foto,
     };
-
+    
     try {
+      //fetch para regitrar o candidato
       const response = await fetch('http://localhost:5000/api/candidatos/', {
         method: 'POST',
         headers: {

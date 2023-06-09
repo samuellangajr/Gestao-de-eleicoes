@@ -2,11 +2,13 @@ const express = require('express');
 const Partido = require('../models/Partido');
 const router = express.Router();
 
+//Obter todos partido
 router.get('/partidos', async (req, res) => {
   const partidos = await Partido.find();
   res.send(partidos);
 });
 
+//Inserir partidos
 router.post('/partidos', async (req, res) => {
   const partido = new Partido({
     nome: req.body.nome,
@@ -16,6 +18,7 @@ router.post('/partidos', async (req, res) => {
   res.status(201).send(partido);
 });
 
+//Obter um partido
 router.get('/partidos/:id', async (req, res) => {
   try {
     const partido = await Partido.findOne({ _id: req.params.id });
@@ -26,6 +29,7 @@ router.get('/partidos/:id', async (req, res) => {
   }
 });
 
+//Actualizar um partido
 router.put('/partidos/:id', async (req, res) => {
   try {
     const partido = await Partido.findOne({ _id: req.params.id });
@@ -46,6 +50,7 @@ router.put('/partidos/:id', async (req, res) => {
   }
 });
 
+//Eliminar um partido
 router.delete('/partidos/:id', async (req, res) => {
   try {
     await Partido.deleteOne({ _id: req.params.id });
